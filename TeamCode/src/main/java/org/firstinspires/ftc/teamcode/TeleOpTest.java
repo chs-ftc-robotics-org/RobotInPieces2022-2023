@@ -9,19 +9,30 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class TeleOpTest extends LinearOpMode {
 
     //Declaring motors here
-    private DcMotor motor = null;
+    DcMotor left;
+    DcMotor right;
 
     //When the "INIT" button is pressed:
     @Override
     public void runOpMode() {
         //Get motors from Hardware Map
-        motor = hardwareMap.get(DcMotor.class, "motor");
+        DcMotor frontLeft = hardwareMap.get(DcMotor.class, "front_left");
+        DcMotor frontRight = hardwareMap.get(DcMotor.class, "front_right");
+        DcMotor backLeft = hardwareMap.get(DcMotor.class, "back_left");
+        DcMotor backRight = hardwareMap.get(DcMotor.class, "back_right");
 
         //Wait here until the "START" button is pressed
         waitForStart();
 
+        double forward;
         //Loop this until the "STOP" button is pressed
         while (opModeIsActive()) {
+            forward = -gamepad1.left_stick_y;
+
+            frontLeft.setPower(forward);
+            frontRight.setPower(forward);
+            backLeft.setPower(forward);
+            backRight.setPower(forward);
 
         }
     }
