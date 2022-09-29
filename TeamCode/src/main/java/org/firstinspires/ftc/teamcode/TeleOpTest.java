@@ -28,12 +28,31 @@ public class TeleOpTest extends LinearOpMode {
         //Loop this until the "STOP" button is pressed
         while (opModeIsActive()) {
             forward = -gamepad1.left_stick_y;
-
-            frontLeft.setPower(forward);
-            frontRight.setPower(forward);
-            backLeft.setPower(forward);
-            backRight.setPower(forward);
-
+            if (forward > 0) {
+                if (forward < 0.5) { // (0.5,1]
+                    frontLeft.setPower(forward);
+                    frontRight.setPower(forward);
+                    backLeft.setPower(forward);
+                    backRight.setPower(forward);
+                } else {
+                    frontLeft.setPower(0.5);
+                    frontRight.setPower(0.5);
+                    backLeft.setPower(0.5);
+                    backRight.setPower(0.5);
+                }
+            } else if (forward < 0) {
+                if (forward < -0.5) { // (-0.5,-1]
+                    frontLeft.setPower(-0.5);
+                    frontRight.setPower(-0.5);
+                    backLeft.setPower(-0.5);
+                    backRight.setPower(-0.5);
+                } else {
+                    frontLeft.setPower(forward);
+                    frontRight.setPower(forward);
+                    backLeft.setPower(forward);
+                    backRight.setPower(forward);
+                }
+            }
         }
     }
 }
