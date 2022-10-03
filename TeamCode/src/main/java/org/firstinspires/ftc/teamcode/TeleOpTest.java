@@ -17,8 +17,10 @@ public class TeleOpTest extends LinearOpMode {
     public void runOpMode() {
         //Get motors from Hardware Map
         DcMotor frontLeft = hardwareMap.get(DcMotor.class, "front_left");
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
         DcMotor frontRight = hardwareMap.get(DcMotor.class, "front_right");
         DcMotor backLeft = hardwareMap.get(DcMotor.class, "back_left");
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
         DcMotor backRight = hardwareMap.get(DcMotor.class, "back_right");
 
         //Wait here until the "START" button is pressed
