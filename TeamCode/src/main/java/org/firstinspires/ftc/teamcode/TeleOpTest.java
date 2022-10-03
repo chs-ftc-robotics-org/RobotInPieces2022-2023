@@ -28,6 +28,7 @@ public class TeleOpTest extends LinearOpMode {
 
         double forward;
         double turn;
+        double strife;
         //Loop this until the "STOP" button is pressed
         while (opModeIsActive()) {
             // Forward & Backward
@@ -52,7 +53,18 @@ public class TeleOpTest extends LinearOpMode {
             }
 
             // Strife Left & Right
-
+            strife = (-gamepad2.left_stick_x) * 0.5;
+            if (strife > 0) { // Strife Right
+                frontLeft.setPower(forward);
+                frontRight.setPower(-forward);
+                backLeft.setPower(-forward);
+                backRight.setPower(forward);
+            } else { // Strife Left
+                frontLeft.setPower(-forward);
+                frontRight.setPower(forward);
+                backLeft.setPower(-forward);
+                backRight.setPower(forward);
+            }
         }
     }
 }
