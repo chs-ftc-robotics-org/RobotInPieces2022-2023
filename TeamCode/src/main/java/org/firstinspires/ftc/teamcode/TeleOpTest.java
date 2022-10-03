@@ -29,7 +29,7 @@ public class TeleOpTest extends LinearOpMode {
         while (opModeIsActive()) {
             forward = -gamepad1.left_stick_y;
             if (forward > 0) {
-                if (forward < 0.5) { // (0.5,1]
+                if (forward > 0.5) { // (0.5,1]
                     frontLeft.setPower(forward);
                     frontRight.setPower(forward);
                     backLeft.setPower(forward);
@@ -41,7 +41,7 @@ public class TeleOpTest extends LinearOpMode {
                     backRight.setPower(0.5);
                 }
             } else if (forward < 0) {
-                if (forward < -0.5) { // (-0.5,-1]
+                if (forward > -0.5) { // (-0.5,-1]
                     frontLeft.setPower(-0.5);
                     frontRight.setPower(-0.5);
                     backLeft.setPower(-0.5);
