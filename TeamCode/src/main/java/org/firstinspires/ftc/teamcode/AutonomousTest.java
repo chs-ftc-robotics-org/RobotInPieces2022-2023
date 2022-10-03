@@ -45,8 +45,8 @@ public class AutonomousTest extends LinearOpMode {
             x  = end - start;
             if (8000 >= x && x >= 4000) {
                 System.out.println(x + " milliseconds have passed");
-                motor3.setPower(1);
-                motor4.setPower(1);
+                motor3.setPower(.1);
+                motor4.setPower(.1);
 
             }
             add++;
