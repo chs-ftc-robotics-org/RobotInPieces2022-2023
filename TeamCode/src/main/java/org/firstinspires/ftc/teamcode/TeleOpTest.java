@@ -38,6 +38,7 @@ public class TeleOpTest extends LinearOpMode {
             backLeft.setPower(forward);
             backRight.setPower(forward);
 
+            /*
             // Left & Right
             turn = (-gamepad1.left_stick_x) * 0.5;
             if (turn > 0) { // Turn Right
@@ -65,6 +66,7 @@ public class TeleOpTest extends LinearOpMode {
                 backLeft.setPower(-forward);
                 backRight.setPower(forward);
             }
+             */
         }
     }
 }
