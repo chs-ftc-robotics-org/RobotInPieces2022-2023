@@ -17,41 +17,53 @@ public class TeleOpTest extends LinearOpMode {
     public void runOpMode() {
         //Get motors from Hardware Map
         DcMotor frontLeft = hardwareMap.get(DcMotor.class, "front_left");
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
         DcMotor frontRight = hardwareMap.get(DcMotor.class, "front_right");
         DcMotor backLeft = hardwareMap.get(DcMotor.class, "back_left");
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
         DcMotor backRight = hardwareMap.get(DcMotor.class, "back_right");
 
         //Wait here until the "START" button is pressed
         waitForStart();
 
         double forward;
+        double turn;
+        double strife;
         //Loop this until the "STOP" button is pressed
         while (opModeIsActive()) {
-            forward = -gamepad1.left_stick_y;
-            if (forward > 0) {
-                if (forward < 0.5) { // (0.5,1]
-                    frontLeft.setPower(forward);
-                    frontRight.setPower(forward);
-                    backLeft.setPower(forward);
-                    backRight.setPower(forward);
-                } else {
-                    frontLeft.setPower(0.5);
-                    frontRight.setPower(0.5);
-                    backLeft.setPower(0.5);
-                    backRight.setPower(0.5);
-                }
-            } else if (forward < 0) {
-                if (forward < -0.5) { // (-0.5,-1]
-                    frontLeft.setPower(-0.5);
-                    frontRight.setPower(-0.5);
-                    backLeft.setPower(-0.5);
-                    backRight.setPower(-0.5);
-                } else {
-                    frontLeft.setPower(forward);
-                    frontRight.setPower(forward);
-                    backLeft.setPower(forward);
-                    backRight.setPower(forward);
-                }
+            // Forward & Backward
+            forward = (-gamepad1.left_stick_y) * 0.5;
+            frontLeft.setPower(forward);
+            frontRight.setPower(forward);
+            backLeft.setPower(forward);
+            backRight.setPower(forward);
+
+            // Left & Right
+            turn = (-gamepad1.left_stick_x) * 0.5;
+            if (turn > 0) { // Turn Right
+                frontLeft.setPower(forward);
+                frontRight.setPower(-forward);
+                backLeft.setPower(forward);
+                backRight.setPower(-forward);
+            } else { // Turn Left
+                frontLeft.setPower(-forward);
+                frontRight.setPower(forward);
+                backLeft.setPower(-forward);
+                backRight.setPower(forward);
+            }
+
+            // Strife Left & Right
+            strife = (-gamepad2.left_stick_x) * 0.5;
+            if (strife > 0) { // Strife Right
+                frontLeft.setPower(forward);
+                frontRight.setPower(-forward);
+                backLeft.setPower(-forward);
+                backRight.setPower(forward);
+            } else { // Strife Left
+                frontLeft.setPower(-forward);
+                frontRight.setPower(forward);
+                backLeft.setPower(-forward);
+                backRight.setPower(forward);
             }
         }
     }
