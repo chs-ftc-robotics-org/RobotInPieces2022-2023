@@ -33,27 +33,16 @@ public class TeleOpTest extends LinearOpMode {
         while (opModeIsActive()) {
             // Forward & Backward
             forward = (-gamepad1.left_stick_y) * 0.5;
-            frontLeft.setPower(forward);
-            frontRight.setPower(forward);
-            backLeft.setPower(forward);
-            backRight.setPower(forward);
-
-            // Left & Right
             turn = (-gamepad1.left_stick_x) * 0.5;
-            if (turn > 0) { // Turn Right
-                frontLeft.setPower(forward);
-                frontRight.setPower(-forward);
-                backLeft.setPower(forward);
-                backRight.setPower(-forward);
-            } else { // Turn Left
-                frontLeft.setPower(-forward);
-                frontRight.setPower(forward);
-                backLeft.setPower(-forward);
-                backRight.setPower(forward);
+            if (forward > 0) {
+                frontLeft.setPower(forward - turn);
+                frontRight.setPower(forward + turn);
+                backLeft.setPower(forward - turn);
+                backRight.setPower(forward + turn);
             }
 
             // Strife Left & Right
-            strife = (-gamepad2.left_stick_x) * 0.5;
+            strife = (-gamepad2.right_stick_x) * 0.5;
             if (strife > 0) { // Strife Right
                 frontLeft.setPower(forward);
                 frontRight.setPower(-forward);
@@ -65,6 +54,7 @@ public class TeleOpTest extends LinearOpMode {
                 backLeft.setPower(-forward);
                 backRight.setPower(forward);
             }
+
         }
     }
 }
