@@ -17,30 +17,32 @@ public class TeleOpTest extends LinearOpMode {
     public void runOpMode() {
         //Get motors from Hardware Map
         DcMotor frontLeft = hardwareMap.get(DcMotor.class, "front_left");
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        //frontLeft.setDirection(DcMotor.Direction.REVERSE);
         DcMotor frontRight = hardwareMap.get(DcMotor.class, "front_right");
         DcMotor backLeft = hardwareMap.get(DcMotor.class, "back_left");
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        //backLeft.setDirection(DcMotor.Direction.REVERSE);
         DcMotor backRight = hardwareMap.get(DcMotor.class, "back_right");
 
         //Wait here until the "START" button is pressed
         waitForStart();
 
-        double forward;
-        double turn;
+        double x;
+        double y;
         double strife;
         //Loop this until the "STOP" button is pressed
         while (opModeIsActive()) {
             // Forward & Backward
-            forward = (-gamepad1.left_stick_y) * 0.5;
-            turn = (-gamepad1.left_stick_x) * 0.5;
-            if (forward > 0) {
-                frontLeft.setPower(forward - turn);
-                frontRight.setPower(forward + turn);
-                backLeft.setPower(forward - turn);
-                backRight.setPower(forward + turn);
-            }
+            y = (-gamepad1.left_stick_y) * 0.75;
+            x=  (-gamepad1.left_stick_x) * 0.75;
 
+            frontLeft.setPower(y);
+            frontRight.setPower(-y);
+            backLeft.setPower(-y);
+            backRight.setPower(y);
+
+
+
+            /*
             // Strife Left & Right
             strife = (-gamepad2.right_stick_x) * 0.5;
             if (strife > 0) { // Strife Right
@@ -54,6 +56,7 @@ public class TeleOpTest extends LinearOpMode {
                 backLeft.setPower(-forward);
                 backRight.setPower(forward);
             }
+             */
 
         }
     }
