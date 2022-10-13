@@ -40,9 +40,7 @@ public class TeleOpTest extends LinearOpMode {
             backLeft.setPower(-y);
             backRight.setPower(y);
 
-            if (x > 0) {
 
-            }
 
             /*
             // Strife Left & Right
