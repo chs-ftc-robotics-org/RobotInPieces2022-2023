@@ -39,37 +39,13 @@ public class TeleOpTest extends LinearOpMode {
             y = (-gamepad1.left_stick_y) * 0.5;
             x = (gamepad1.left_stick_x) * 0.5;
             y1 = (-gamepad1.right_stick_y) * 0.5;
-            x1 = (gamepad1.right_stick_x) * 0.5;
+            x1 = (-gamepad1.right_stick_x) * 0.5;
 
-            frontLeft.setPower(y-x);
-            backLeft.setPower(y-x);
-            frontRight.setPower(y+x);
-            backRight.setPower(y+x);
+            frontLeft.setPower((y-x)-x1);
+            backLeft.setPower((y-x)+x1);
+            frontRight.setPower((y+x)+x1);
+            backRight.setPower((y+x)-x1);
 
-            if (Math.abs(x1) > 0) {
-                frontRight.setPower(-(x1)+(y+x));
-                backLeft.setPower(-(x1)+(y-x));
-                frontLeft.setPower((x1)+(y-x));
-                backRight.setPower(x1+(y+x));
-            }
-
-
-
-            /*
-            // Strife Left & Right
-            strife = (-gamepad2.right_stick_x) * 0.5;
-            if (strife > 0) { // Strife Right
-                frontLeft.setPower(forward);
-                frontRight.setPower(-forward);
-                backLeft.setPower(-forward);
-                backRight.setPower(forward);
-            } else { // Strife Left
-                frontLeft.setPower(-forward);
-                frontRight.setPower(forward);
-                backLeft.setPower(-forward);
-                backRight.setPower(forward);
-            }
-             */
 
         }
     }
