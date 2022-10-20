@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 @TeleOp(name="TeleOp: Test", group="Tests")
 public class TeleOpTest extends LinearOpMode {
 
@@ -17,10 +19,10 @@ public class TeleOpTest extends LinearOpMode {
     public void runOpMode() {
         //Get motors from Hardware Map
         DcMotor frontLeft = hardwareMap.get(DcMotor.class, "front_left");
-        //frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
         DcMotor frontRight = hardwareMap.get(DcMotor.class, "front_right");
         DcMotor backLeft = hardwareMap.get(DcMotor.class, "back_left");
-        //backLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
         DcMotor backRight = hardwareMap.get(DcMotor.class, "back_right");
 
         //Wait here until the "START" button is pressed
@@ -28,33 +30,22 @@ public class TeleOpTest extends LinearOpMode {
 
         double x;
         double y;
+        double y1;
+        double x1;
         double strife;
         //Loop this until the "STOP" button is pressed
         while (opModeIsActive()) {
             // Forward & Backward
             y = (-gamepad1.left_stick_y) * 0.5;
-            x = (-gamepad1.left_stick_x) * 0.5;
+            x = (gamepad1.left_stick_x) * 0.5;
+            y1 = (-gamepad1.right_stick_y) * 0.5;
+            x1 = (-gamepad1.right_stick_x) * 0.5;
 
-                frontLeft.setPower(y+x);
-                frontRight.setPower((y+x));
-                backLeft.setPower(-(y+x));
-                backRight.setPower(-(y+x));
+            frontLeft.setPower((y-x)-x1);
+            backLeft.setPower((y-x)+x1);
+            frontRight.setPower((y+x)+x1);
+            backRight.setPower((y+x)-x1);
 
-            /*
-            // Strife Left & Right
-            strife = (-gamepad2.right_stick_x) * 0.5;
-            if (strife > 0) { // Strife Right
-                frontLeft.setPower(forward);
-                frontRight.setPower(-forward);
-                backLeft.setPower(-forward);
-                backRight.setPower(forward);
-            } else { // Strife Left
-                frontLeft.setPower(-forward);
-                frontRight.setPower(forward);
-                backLeft.setPower(-forward);
-                backRight.setPower(forward);
-            }
-             */
 
         }
     }
