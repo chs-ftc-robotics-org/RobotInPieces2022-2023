@@ -10,19 +10,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class AutonomousTest extends LinearOpMode {
 
     //Declaring motors here
-    private DcMotor motor = null;
-    private DcMotor motor2 = null;
-    private DcMotor motor3 = null;
-    private DcMotor motor4 = null;
 
     //When the "INIT" button is pressed:
     @Override
     public void runOpMode() {
         //Get motors from Hardware Map
-        motor = hardwareMap.get(DcMotor.class, "front_right");
-        motor2 = hardwareMap.get(DcMotor.class, "front_left");
-        motor3 = hardwareMap.get(DcMotor.class, "back_right");
-        motor4 = hardwareMap.get(DcMotor.class, "back_left");
+        DcMotor frontLeft = hardwareMap.get(DcMotor.class, "front_left");
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        DcMotor frontRight = hardwareMap.get(DcMotor.class, "front_right");
+        DcMotor backLeft = hardwareMap.get(DcMotor.class, "back_left");
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        DcMotor backRight = hardwareMap.get(DcMotor.class, "back_right");
 
         //An example of a timer:
         ElapsedTime timer = new ElapsedTime();
@@ -34,7 +32,10 @@ public class AutonomousTest extends LinearOpMode {
 
         double start = 0;
         double end;
-        double x = 0;
+        double sub = 0;
+
+        double x = 0.1;
+
         int add = 0;
         //Loop this until the "STOP" button is pressed
         while (opModeIsActive()) {
@@ -42,12 +43,17 @@ public class AutonomousTest extends LinearOpMode {
                 start = timer.milliseconds();
 
             end = timer.milliseconds();
-            x  = end - start;
-            if (8000 >= x && x >= 4000) {
-                System.out.println(x + " milliseconds have passed");
-                motor3.setPower(.1);
-                motor4.setPower(-.1);
+            sub  = end - start;
+            frontLeft.setPower(x);
+            backLeft.setPower(x);
+            frontRight.setPower(x);
+            backRight.setPower(x);
 
+            if (10000 >= sub && sub >= 4000) {
+                System.out.println(x + " milliseconds have passed");
+                x = -(0.2);
+            } else if (sub > 10000){
+                x = 0;
             }
             add++;
         }
