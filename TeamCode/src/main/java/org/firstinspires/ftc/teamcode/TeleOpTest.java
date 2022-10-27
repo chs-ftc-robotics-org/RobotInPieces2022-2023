@@ -44,7 +44,6 @@ public class TeleOpTest extends LinearOpMode {
             backLeft.setPower((y-x)+x1);
             frontRight.setPower((y+x)+x1);
             backRight.setPower((y+x)-x1);
-
         }
     }
 }
