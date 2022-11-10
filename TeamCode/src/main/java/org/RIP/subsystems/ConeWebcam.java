@@ -7,7 +7,22 @@ import org.RIP.Subsystem;
 
 public class ConeWebcam implements Subsystem {
     @Override
+    public boolean active() {
+        return false;
+    }
+
+    @Override
     public void initialize(LinearOpMode opMode, OurRobot robot) {
+
+    }
+
+    @Override
+    public void tick() {
+
+    }
+
+    @Override
+    public void disable() {
 
     }
 }
