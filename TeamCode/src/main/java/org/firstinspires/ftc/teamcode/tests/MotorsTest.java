@@ -26,19 +26,19 @@ public class MotorsTest extends LinearOpMode {
             if (gamepad1.left_stick_y > 0.2) {
                 m0.setPower(gamepad1.left_stick_y);
             } else if (gamepad1.left_stick_y < -0.2){
-                m3.setPower(gamepad1.right_stick_y);
+                m1.setPower(gamepad1.left_stick_y);
             } else {
                 m0.setPower(0);
-                m3.setPower(0);
+                m1.setPower(0);
             }
 
             if (gamepad1.right_stick_y > 0.2) {
                 m2.setPower(gamepad1.right_stick_y);
             } else if (gamepad1.right_stick_y < -0.2){
-                m1.setPower(gamepad1.left_stick_y);
+                m3.setPower(gamepad1.right_stick_y);
             } else {
                 m2.setPower(0);
-                m1.setPower(0);
+                m3.setPower(0);
             }
 
             //telemetry.addData("Port 0 Power:", m0power);
