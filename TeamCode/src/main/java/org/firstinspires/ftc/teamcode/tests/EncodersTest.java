@@ -17,7 +17,9 @@ public class EncodersTest extends LinearOpMode {
         DcMotor m2 = hardwareMap.get(DcMotor.class, "front_right");
         DcMotor m1 = hardwareMap.get(DcMotor.class, "back_left");
         DcMotor m0 = hardwareMap.get(DcMotor.class, "back_right");
+        telemetry.addLine("reached before start");
         waitForStart();
+        telemetry.addLine("reached here");
 
         while(opModeIsActive()){
             telemetry.addLine("Encoders:");
@@ -25,6 +27,7 @@ public class EncodersTest extends LinearOpMode {
             telemetry.addData("back_left current position: ", m1.getCurrentPosition());
             telemetry.addData("front_right current position: ", m2.getCurrentPosition());
             telemetry.addData("front_left current position: ", m3.getCurrentPosition());
+            telemetry.update();
         }
     }
 }

@@ -22,11 +22,13 @@ public class MotorsTest extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()){
-
+            telemetry.addLine("Motors:");
             if (gamepad1.left_stick_y > 0.2) {
                 m0.setPower(gamepad1.left_stick_y);
+                telemetry.addData("back_right power: ", gamepad1.left_stick_y);
             } else if (gamepad1.left_stick_y < -0.2){
                 m1.setPower(gamepad1.left_stick_y);
+                telemetry.addData("back_left power ", gamepad1.left_stick_y);
             } else {
                 m0.setPower(0);
                 m1.setPower(0);
@@ -34,12 +36,15 @@ public class MotorsTest extends LinearOpMode {
 
             if (gamepad1.right_stick_y > 0.2) {
                 m2.setPower(gamepad1.right_stick_y);
+                telemetry.addData("front_right power ", gamepad1.right_stick_y);
             } else if (gamepad1.right_stick_y < -0.2){
                 m3.setPower(gamepad1.right_stick_y);
+                telemetry.addData("front_left power ", gamepad1.right_stick_y);
             } else {
                 m2.setPower(0);
                 m3.setPower(0);
             }
+            telemetry.update();
 
             //telemetry.addData("Port 0 Power:", m0power);
         }

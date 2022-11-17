@@ -20,9 +20,10 @@ public class ServosTest extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()){
-            
+
 
             //telemetry.addData("Port 0 Power:", m0power);
+            telemetry.update();
         }
     }
 }
