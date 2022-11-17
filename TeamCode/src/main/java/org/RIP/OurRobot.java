@@ -1,6 +1,7 @@
 package org.RIP;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.RIP.subsystems.*;
 
@@ -10,6 +11,7 @@ public class OurRobot {
 
     public Drivetrain drivetrain = new Drivetrain();
     public ConeWebcam coneWebcam = new ConeWebcam();
+    public ElapsedTime globalTimer = new ElapsedTime();
 
     private final Subsystem[] subsystems = {
             drivetrain,
@@ -17,8 +19,9 @@ public class OurRobot {
     };
 
     public void initialize(LinearOpMode opMode) {
+        globalTimer.reset();
         for(Subsystem system : subsystems){
-                system.initialize(opMode, this);
+                system.initialize(opMode, this, globalTimer);
         }
     }
 }

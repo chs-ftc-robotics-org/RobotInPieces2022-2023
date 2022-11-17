@@ -21,7 +21,7 @@ public class Drivetrain implements Subsystem {
     DcMotor backRight;
 
     @Override
-    public void initialize(LinearOpMode opMode, OurRobot robot) {
+    public void initialize(LinearOpMode opMode, OurRobot robot, ElapsedTime globalTimer) {
         //Get motors from Hardware Map
         DcMotor frontLeft = opMode.hardwareMap.get(DcMotor.class, "front_left");
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
