@@ -9,10 +9,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @TeleOp(name="Encoders: Test", group="Tests")
 public class EncodersTest extends LinearOpMode {
 
-    //Declaring motors here
-    DcMotor left;
-    DcMotor right;
-
     //When the "INIT" button is pressed:
     @Override
     public void runOpMode() {
@@ -24,13 +20,11 @@ public class EncodersTest extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()){
+            telemetry.addLine("Encoders:");
             telemetry.addData("back_right current position: ", m0.getCurrentPosition());
             telemetry.addData("back_left current position: ", m1.getCurrentPosition());
             telemetry.addData("front_right current position: ", m2.getCurrentPosition());
             telemetry.addData("front_left current position: ", m3.getCurrentPosition());
-
-
-            //telemetry.addData("Port 0 Power:", m0power);
         }
     }
 }
