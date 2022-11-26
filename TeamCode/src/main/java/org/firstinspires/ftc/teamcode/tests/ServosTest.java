@@ -17,6 +17,7 @@ public class ServosTest extends LinearOpMode {
         Servo c2 = hardwareMap.get(Servo.class, "front_right");
         Servo c1 = hardwareMap.get(Servo.class, "back_left");
         Servo c0 = hardwareMap.get(Servo.class, "back_right");
+        Servo test = hardwareMap.getAll
         waitForStart();
 
         while(opModeIsActive()){

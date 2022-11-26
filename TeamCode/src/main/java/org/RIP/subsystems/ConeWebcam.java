@@ -26,4 +26,9 @@ public class ConeWebcam implements Subsystem {
     public void disable() {
 
     }
+
+    @Override
+    public String toString() {
+        return "ConeWebcam";
+    }
 }

@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.RIP.subsystems.*;
 
+import java.io.IOException;
+
 public class OurRobot {
 
     // add stuff here this basically is a class that lets you access all functionality of bot
@@ -21,7 +23,11 @@ public class OurRobot {
     public void initialize(LinearOpMode opMode) {
         globalTimer.reset();
         for(Subsystem system : subsystems){
+            try {
                 system.initialize(opMode, this, globalTimer);
+            } catch (IOException e){
+                system.disable();
+            }
         }
     }
 }

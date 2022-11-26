@@ -23,16 +23,17 @@ public class Drivetrain implements Subsystem {
     @Override
     public void initialize(LinearOpMode opMode, OurRobot robot, ElapsedTime globalTimer) {
         //Get motors from Hardware Map
-        DcMotor frontLeft = opMode.hardwareMap.get(DcMotor.class, "front_left");
+        frontLeft = opMode.hardwareMap.get(DcMotor.class, "front_left");
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        DcMotor frontRight = opMode.hardwareMap.get(DcMotor.class, "front_right");
-        DcMotor backLeft = opMode.hardwareMap.get(DcMotor.class, "back_left");
+        frontRight = opMode.hardwareMap.get(DcMotor.class, "front_right");
+        backLeft = opMode.hardwareMap.get(DcMotor.class, "back_left");
         backLeft.setDirection(DcMotor.Direction.REVERSE);
-        DcMotor backRight = opMode.hardwareMap.get(DcMotor.class, "back_right");
+        backRight = opMode.hardwareMap.get(DcMotor.class, "back_right");
     }
 
     @Override
     public void tick() {
+        if(!isActive) return;
         frontLeft.setPower(frontLeftPwr);
         frontRight.setPower(frontRightPwr);
         backLeft.setPower(backLeftPwr);
@@ -40,11 +41,15 @@ public class Drivetrain implements Subsystem {
     }
 
     @Override
-    public void disable() {
+    public void stop() {
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+    }
+
+    @Override
+    public void disable() {
         isActive = false;
     }
 
@@ -53,7 +58,13 @@ public class Drivetrain implements Subsystem {
         return isActive;
     }
 
+    @Override
+    public String toString() {
+        return "drivetrain";
+    }
+
     public void move(double power, double seconds) {
+        if(!isActive) return;
         ElapsedTime timer = new ElapsedTime();
         timer.reset();
         double startTime = timer.milliseconds();
