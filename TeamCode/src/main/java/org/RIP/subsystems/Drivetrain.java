@@ -83,7 +83,7 @@ public class Drivetrain extends Subsystem {
             backLeftPwr = power;
             backRightPwr = power;
         } else{
-            power = 0;
+            stop();
         }
     }
 }
