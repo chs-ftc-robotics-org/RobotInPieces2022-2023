@@ -24,7 +24,7 @@ public class OurRobot {
         globalTimer.reset();
         for(Subsystem system : subsystems){
             try {
-                system.initialize(opMode, this, globalTimer);
+                system.initialize(opMode, globalTimer);
             } catch (IOException e){
                 system.disable();
             }

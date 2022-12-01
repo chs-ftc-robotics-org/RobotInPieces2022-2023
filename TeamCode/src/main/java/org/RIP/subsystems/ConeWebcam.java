@@ -6,24 +6,20 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.RIP.OurRobot;
 import org.RIP.Subsystem;
 
-public class ConeWebcam implements Subsystem {
-    @Override
-    public boolean active() {
-        return false;
-    }
+public class ConeWebcam extends Subsystem {
 
     @Override
-    public void initialize(LinearOpMode opMode, OurRobot robot, ElapsedTime globalTimer) {
+    public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) {
 
     }
 
     @Override
-    public void tick() {
+    public void update() {
 
     }
 
     @Override
-    public void disable() {
+    public void stop() {
 
     }
 

@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.RIP.OurRobot;
 import org.RIP.Subsystem;
 
-public class Drivetrain implements Subsystem {
+import java.util.Objects;
+
+public class Drivetrain extends Subsystem {
     private boolean isActive = false;
 
     private double frontLeftPwr;
@@ -19,20 +21,27 @@ public class Drivetrain implements Subsystem {
     DcMotor frontRight;
     DcMotor backLeft;
     DcMotor backRight;
+    DcMotor[] driveMotors = {frontLeft, frontRight, backLeft, backRight};
+
+    private ElapsedTime globalTimer;
+
 
     @Override
-    public void initialize(LinearOpMode opMode, OurRobot robot, ElapsedTime globalTimer) {
+    public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) {
         //Get motors from Hardware Map
         frontLeft = opMode.hardwareMap.get(DcMotor.class, "front_left");
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight = opMode.hardwareMap.get(DcMotor.class, "front_right");
         backLeft = opMode.hardwareMap.get(DcMotor.class, "back_left");
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
         backRight = opMode.hardwareMap.get(DcMotor.class, "back_right");
+
+
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        isActive = true;
     }
 
     @Override
-    public void tick() {
+    public void update() {
         if(!isActive) return;
         frontLeft.setPower(frontLeftPwr);
         frontRight.setPower(frontRightPwr);
@@ -49,24 +58,24 @@ public class Drivetrain implements Subsystem {
     }
 
     @Override
-    public void disable() {
-        isActive = false;
-    }
-
-    @Override
-    public boolean active() {
-        return isActive;
-    }
-
-    @Override
     public String toString() {
         return "drivetrain";
     }
 
+    //move (blocking)
+    ElapsedTime timer = new ElapsedTime();
+    boolean initialized;
     public void move(double power, double seconds) {
         if(!isActive) return;
-        ElapsedTime timer = new ElapsedTime();
-        timer.reset();
+        
         double startTime = timer.milliseconds();
+        if(startTime < seconds) {
+            frontLeftPwr = power;
+            frontRightPwr = power;
+            backLeftPwr = power;
+            backRightPwr = power;
+        } else{
+            stop();
+        }
     }
 }
