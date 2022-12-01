@@ -17,6 +17,8 @@ public class Drivetrain extends Subsystem {
     private double backLeftPwr;
     private double backRightPwr;
 
+    private LinearOpMode opMode;
+
     DcMotor frontLeft;
     DcMotor frontRight;
     DcMotor backLeft;
@@ -25,9 +27,9 @@ public class Drivetrain extends Subsystem {
 
     private ElapsedTime globalTimer;
 
-
     @Override
     public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) {
+        this.opMode = opMode;
         //Get motors from Hardware Map
         frontLeft = opMode.hardwareMap.get(DcMotor.class, "front_left");
         frontRight = opMode.hardwareMap.get(DcMotor.class, "front_right");
@@ -65,17 +67,23 @@ public class Drivetrain extends Subsystem {
     //move (blocking)
     ElapsedTime timer = new ElapsedTime();
     boolean initialized;
+    double startTime = timer.milliseconds();
     public void move(double power, double seconds) {
         if(!isActive) return;
         
-        double startTime = timer.milliseconds();
-        if(startTime < seconds) {
+        double endTime  = timer.milliseconds();
+        opMode.telemetry.addLine("second : "+String.valueOf(seconds*1000));
+        opMode.telemetry.addLine("Eval : "+String.valueOf(endTime-startTime));
+
+        opMode.telemetry.update();
+
+        if((endTime - startTime) < seconds*1000) {
             frontLeftPwr = power;
             frontRightPwr = power;
             backLeftPwr = power;
             backRightPwr = power;
         } else{
-            stop();
+            power = 0;
         }
     }
 }
