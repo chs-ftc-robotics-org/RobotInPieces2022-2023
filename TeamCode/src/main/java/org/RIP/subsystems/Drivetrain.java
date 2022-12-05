@@ -53,10 +53,10 @@ public class Drivetrain extends Subsystem {
 
     @Override
     public void stop() {
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
+        frontLeftPwr=0;
+        frontRightPwr=0;
+        backLeftPwr=0;
+        backRightPwr=0;
     }
 
     @Override
