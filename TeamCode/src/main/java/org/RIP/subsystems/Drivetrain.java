@@ -68,21 +68,26 @@ public class Drivetrain extends Subsystem {
     ElapsedTime timer = new ElapsedTime();
     boolean initialized;
     double startTime = timer.milliseconds();
-    public void move(double power, double seconds) {
+    public void move(double power, double miliseconds) {
         if(!isActive) return;
-        
-        double endTime  = timer.milliseconds();
-        opMode.telemetry.addLine("second : "+String.valueOf(seconds*1000));
+
+        double endTime  = timer.milliseconds() ;
+        opMode.telemetry.addLine("second : "+String.valueOf(miliseconds));
         opMode.telemetry.addLine("Eval : "+String.valueOf(endTime-startTime));
 
         opMode.telemetry.update();
 
-        if((endTime - startTime) < seconds*1000) {
+        if((endTime - startTime) < miliseconds-2000) {
             frontLeftPwr = power;
             frontRightPwr = power;
             backLeftPwr = power;
             backRightPwr = power;
-        } else{
+        } else if ((endTime - startTime) < miliseconds+5000){
+            frontLeftPwr = power;
+            frontRightPwr = -power;
+            backLeftPwr = power;
+            backRightPwr = -power;
+        } else {
             stop();
         }
     }
