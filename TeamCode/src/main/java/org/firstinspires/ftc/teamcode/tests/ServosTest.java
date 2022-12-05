@@ -13,16 +13,12 @@ public class ServosTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         //Get motors from Hardware Map
-        Servo c3 = hardwareMap.get(Servo.class, "front_left");
-        Servo c2 = hardwareMap.get(Servo.class, "front_right");
-        Servo c1 = hardwareMap.get(Servo.class, "back_left");
-        Servo c0 = hardwareMap.get(Servo.class, "back_right");
+        Servo c0 = hardwareMap.get(Servo.class, "Test");
 //        Servo test = hardwareMap.getAll
         waitForStart();
 
         while(opModeIsActive()){
-
-
+            c0.setPosition(1);
             //telemetry.addData("Port 0 Power:", m0power);
             telemetry.update();
         }
