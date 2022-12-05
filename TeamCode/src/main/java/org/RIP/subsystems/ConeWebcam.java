@@ -17,7 +17,6 @@ import java.util.List;
 public class ConeWebcam extends Subsystem {
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
-    private Telemetry telemetry = opMode.telemetry;
     private static final String VUFORIA_KEY = "AXyOBAb/////AAABmR6fZcY51EWEsPmbfWJ1w99ml2AnaVfhpovIbujIbr0CK66LMFHd5kpdeX/Z776lrYYfpu3LXAgDw0ZRpYnRuMwVrPtHJ12i95kzVFtN023RjzPCMPbkYmFlSXhSjm2Pz5H4vtnqhvxcbbEvvklIi1LQIjhzxdI5Ue5M5MdkbwDbGwFdQG86jS3BsJTwoXC1Citcnzih9rmBEudWy3bZUBa6osfNK70T3KEoEWrOp/hKBzw+K0D7uwx3Rhqu+yZcM+nLizyKEv6BiMGRjEL3le0P67bGfBnOnxbYSKY+4ifFA2k7cUoZbuTTYVzNbtkTf4aBcn55ltcU90QtAqzRStLHC4ij3JSdtW3dqLJoMGWB";
     private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
     // private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
@@ -72,14 +71,14 @@ public class ConeWebcam extends Subsystem {
     public void update() {
 
         /** Wait for the game to begin */
-        telemetry.addData(">", "Press Play to start op mode");
-        telemetry.update();
+        opMode.telemetry.addData(">", "Press Play to start op mode");
+        opMode.telemetry.update();
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
-                telemetry.addData("# Objects Detected", updatedRecognitions.size());
+                opMode.telemetry.addData("# Objects Detected", updatedRecognitions.size());
 
                 // step through the list of recognitions and display image position/size information for each one
                 // Note: "Image number" refers to the randomized image orientation/number
@@ -89,12 +88,12 @@ public class ConeWebcam extends Subsystem {
                     double width = Math.abs(recognition.getRight() - recognition.getLeft());
                     double height = Math.abs(recognition.getTop() - recognition.getBottom());
 
-                    telemetry.addData("", " ");
-                    telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
-                    telemetry.addData("- Position (Row/Col)", "%.0f / %.0f", row, col);
-                    telemetry.addData("- Size (Width/Height)", "%.0f / %.0f", width, height);
+                    opMode.telemetry.addData("", " ");
+                    opMode.telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
+                    opMode.telemetry.addData("- Position (Row/Col)", "%.0f / %.0f", row, col);
+                    opMode.telemetry.addData("- Size (Width/Height)", "%.0f / %.0f", width, height);
                 }
-                telemetry.update();
+                opMode.telemetry.update();
             }
         }
     }
