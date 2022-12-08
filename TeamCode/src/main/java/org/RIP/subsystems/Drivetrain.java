@@ -77,7 +77,7 @@ public class Drivetrain extends Subsystem {
 
         opMode.telemetry.update();
 
-        if((endTime - startTime) < miliseconds-2000) {
+        if((endTime - startTime) < 2000) {
             frontLeftPwr = power;
             frontRightPwr = power;
             backLeftPwr = power;
@@ -85,7 +85,7 @@ public class Drivetrain extends Subsystem {
         } else if ((endTime - startTime) < miliseconds+5000){
             frontLeftPwr = power;
             frontRightPwr = -power;
-            backLeftPwr = power;
+            backLeftPwr  = power;
             backRightPwr = -power;
         } else {
             stop();

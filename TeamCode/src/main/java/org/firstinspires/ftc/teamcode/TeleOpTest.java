@@ -90,9 +90,9 @@ public class TeleOpTest extends LinearOpMode {
         //Loop this until the "STOP" button is pressed
         while (opModeIsActive()) {
             // Forward & Backward
-            y = (-gamepad1.left_stick_y) * 0.3;
-            x1 = -(gamepad1.left_stick_x) * 0.3;
-            x = (-gamepad1.right_stick_x) * 0.3;
+            y = (-gamepad1.left_stick_y) * 0.2;
+            x1 = -(gamepad1.left_stick_x) * 0.2;
+            x = (-gamepad1.right_stick_x) * 0.2;
 
             frontLeft.setPower((y-x)-x1);
             backLeft.setPower((y-x)+x1);
