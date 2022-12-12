@@ -37,6 +37,7 @@ public class TeleOpTest extends LinearOpMode {
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
 
+
     /**
      * Initialize the TensorFlow Object Detection engine.
      */
@@ -70,7 +71,6 @@ public class TeleOpTest extends LinearOpMode {
     public void runOpMode() {
         initVuforia();
         initTfod();
-
         //Get motors from Hardware Map
         DcMotor frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -90,9 +90,9 @@ public class TeleOpTest extends LinearOpMode {
         //Loop this until the "STOP" button is pressed
         while (opModeIsActive()) {
             // Forward & Backward
-            y = (-gamepad1.left_stick_y) * 0.2;
-            x1 = -(gamepad1.left_stick_x) * 0.2;
-            x = (-gamepad1.right_stick_x) * 0.2;
+            y = (-gamepad1.left_stick_y) * 0.4;
+            x1 = (gamepad1.left_stick_x) * 0.4;
+            x = (-gamepad1.right_stick_x) * 0.4;
 
             frontLeft.setPower((y-x)-x1);
             backLeft.setPower((y-x)+x1);

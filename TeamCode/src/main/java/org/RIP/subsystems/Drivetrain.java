@@ -68,6 +68,7 @@ public class Drivetrain extends Subsystem {
     ElapsedTime timer = new ElapsedTime();
     boolean initialized;
     double startTime = timer.milliseconds();
+    boolean cont = true;
     public void move(double power, double miliseconds) {
         if(!isActive) return;
 
@@ -75,20 +76,30 @@ public class Drivetrain extends Subsystem {
         opMode.telemetry.addLine("second : "+String.valueOf(miliseconds));
         opMode.telemetry.addLine("Eval : "+String.valueOf(endTime-startTime));
 
+        opMode.telemetry.addData("back_right current position: ", frontLeft.getCurrentPosition());
+
         opMode.telemetry.update();
 
-        if((endTime - startTime) < 2000) {
-            frontLeftPwr = power;
-            frontRightPwr = power;
-            backLeftPwr = power;
-            backRightPwr = power;
-        } else if ((endTime - startTime) < miliseconds+5000){
-            frontLeftPwr = power;
-            frontRightPwr = -power;
-            backLeftPwr  = power;
-            backRightPwr = -power;
+        int eval = ((int) endTime - (int) startTime) % 2;
+
+        while (eval != 0 ) {
+            if (cont) {
+                frontLeftPwr = power;
+                frontRightPwr = power;
+                backLeftPwr = power;
+                backRightPwr = power;
+            } else {
+                frontLeftPwr = -power;
+                frontRightPwr = -power;
+                backLeftPwr = -power;
+                backRightPwr = -power;
+            }
+        }
+
+        if(frontLeft.getCurrentPosition() == 0) {
+            cont = false;
         } else {
-            stop();
+            cont = true;
         }
     }
 }
