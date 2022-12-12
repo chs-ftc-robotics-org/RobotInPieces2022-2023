@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<Robot type="FirstInspires-FTC">
+<Robot xmlns:tools="http://schemas.android.com/tools"
+    type="FirstInspires-FTC"
+    tools:ignore="MissingDefaultResource">
     <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
         <LynxModule name="Control Hub" port="173">
             <goBILDA5202SeriesMotor name="back_right" port="0" />
