@@ -70,7 +70,7 @@ public class Drivetrain extends Subsystem {
     boolean initialized;
     double startTime = timer.milliseconds();
     public void move(double power, double milliseconds) {
-        if(!isActive) return;
+        //if(!isActive) return;
 
         double endTime  = timer.milliseconds() ;
         opMode.telemetry.addLine("second : "+String.valueOf(milliseconds));

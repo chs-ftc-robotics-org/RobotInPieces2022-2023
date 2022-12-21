@@ -16,10 +16,14 @@ public class ServosTest extends LinearOpMode {
         Servo c0 = hardwareMap.get(Servo.class, "Test");
 //        Servo test = hardwareMap.getAll
         waitForStart();
+        double y = 0;
 
         while(opModeIsActive()){
-            c0.setPosition(1);
+            y = -gamepad2.left_stick_y *.4;
+            c0.setPosition(y);
+
             //telemetry.addData("Port 0 Power:", m0power);
+            telemetry.addLine(String.valueOf(c0.getPosition()));
             telemetry.update();
         }
     }
