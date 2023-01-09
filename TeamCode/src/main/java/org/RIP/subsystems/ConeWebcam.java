@@ -24,10 +24,13 @@ public class ConeWebcam extends Subsystem {
     //this is where it's stored on the control hub
     private static final String TFOD_MODEL_FILE  = Environment.getExternalStorageDirectory().getPath() + "/FIRST/tflitemodels/rip_model_v1.tflite";
     private static final String[] LABELS = {
-            "1 Bolt",
-            "2 Bulb",
-            "3 Panel"
+            "skulls",
+            "coffins",
+            "gears"
     };
+
+    private LinearOpMode opMode;
+    private ElapsedTime globalTimer;
 
     @Override
     public void disable() {
@@ -37,6 +40,8 @@ public class ConeWebcam extends Subsystem {
 
     @Override
     public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) {
+        this.opMode = opMode;
+        this.globalTimer = globalTimer;
             /*
              * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
              */

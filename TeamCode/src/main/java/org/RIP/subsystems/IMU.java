@@ -24,6 +24,9 @@ public class IMU extends Subsystem {
     // State used for updating telemetry
     Orientation angles;
     Acceleration gravity;
+
+    private LinearOpMode opMode;
+    private ElapsedTime globalTimer;
     @Override
     public void disable() {
 
@@ -31,6 +34,8 @@ public class IMU extends Subsystem {
 
     @Override
     public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) throws IOException {
+        this.opMode = opMode;
+        this.globalTimer = globalTimer;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;

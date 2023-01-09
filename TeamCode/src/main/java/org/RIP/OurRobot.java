@@ -21,7 +21,7 @@ public class OurRobot {
             drivetrain,
             coneWebcam,
             imu,
-            slides
+            //slides
     };
 
     public void initialize(LinearOpMode opMode) {

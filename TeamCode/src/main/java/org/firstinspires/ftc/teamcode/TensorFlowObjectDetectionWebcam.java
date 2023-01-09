@@ -67,9 +67,9 @@ public class TensorFlowObjectDetectionWebcam extends LinearOpMode {
 
 
     private static final String[] LABELS = {
-            "1 Bolt",
-            "2 Bulb",
-            "3 Panel"
+            "skulls",
+            "coffins",
+            "gears"
     };
 
     /*

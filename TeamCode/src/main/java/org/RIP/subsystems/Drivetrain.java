@@ -19,14 +19,13 @@ public class Drivetrain extends Subsystem {
 
     private boolean isActive;
 
-    private LinearOpMode opMode;
-
     DcMotor frontLeft;
     DcMotor frontRight;
     DcMotor backLeft;
     DcMotor backRight;
     DcMotor[] driveMotors = {frontLeft, frontRight, backLeft, backRight};
 
+    private LinearOpMode opMode;
     private ElapsedTime globalTimer;
 
     @Override
