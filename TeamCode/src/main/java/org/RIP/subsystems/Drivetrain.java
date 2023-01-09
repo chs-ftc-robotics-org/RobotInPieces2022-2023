@@ -7,15 +7,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.RIP.OurRobot;
 import org.RIP.Subsystem;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class Drivetrain extends Subsystem {
-    private boolean isActive = false;
 
     private double frontLeftPwr;
     private double frontRightPwr;
     private double backLeftPwr;
     private double backRightPwr;
+
+    private boolean isActive;
 
     private LinearOpMode opMode;
 
@@ -28,7 +30,13 @@ public class Drivetrain extends Subsystem {
     private ElapsedTime globalTimer;
 
     @Override
-    public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) {
+    public void disable() {
+        isActive = false;
+        stopMoving();
+    }
+
+    @Override
+    public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) throws IOException {
         this.opMode = opMode;
         this.globalTimer = globalTimer;
         //Get motors from Hardware Map
@@ -40,7 +48,6 @@ public class Drivetrain extends Subsystem {
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
-        isActive = true;
     }
 
     @Override
@@ -51,9 +58,7 @@ public class Drivetrain extends Subsystem {
         backLeft.setPower(backLeftPwr);
         backRight.setPower(backRightPwr);
     }
-
-    @Override
-    public void stop() {
+    public void stopMoving() {
         frontLeftPwr=0;
         frontRightPwr=0;
         backLeftPwr=0;
@@ -89,7 +94,7 @@ public class Drivetrain extends Subsystem {
             backLeftPwr = power;
             backRightPwr = -power;
         } else {
-            stop();
+            stopMoving();
         }
     }
 }

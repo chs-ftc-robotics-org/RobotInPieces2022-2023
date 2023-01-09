@@ -13,11 +13,15 @@ public class OurRobot {
 
     public Drivetrain drivetrain = new Drivetrain();
     public ConeWebcam coneWebcam = new ConeWebcam();
+    public IMU imu = new IMU();
+    public Slides slides = new Slides();
     public ElapsedTime globalTimer = new ElapsedTime();
 
     private final Subsystem[] subsystems = {
             drivetrain,
-            coneWebcam
+            coneWebcam,
+            imu,
+            slides
     };
 
     public void initialize(LinearOpMode opMode) {
