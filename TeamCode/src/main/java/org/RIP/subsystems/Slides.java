@@ -15,6 +15,7 @@ public class Slides extends Subsystem {
     DcMotor slideMotor;
     TouchSensor slideSensor;
     ElapsedTime globalTimer;
+    LinearOpMode opMode;
     @Override
     public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) throws IOException {
         this.opMode = opMode;
