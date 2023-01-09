@@ -20,6 +20,7 @@ public class Slides extends Subsystem {
         slideSensor = opMode.hardwareMap.get(TouchSensor.class, "slide_sensor");
         ElapsedTime timeout = new ElapsedTime();
         timeout.reset();
+        //move slides down
         while(!slideSensor.isPressed() && timeout.seconds() < 6) {
             slideMotor.setPower(0.3);
         }

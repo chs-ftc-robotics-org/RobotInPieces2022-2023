@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
-@Autonomous(name="Subsystems: Test", group="Tests")
+@Autonomous(name="Camera: Test", group="Tests")
 public class CameraTest extends LinearOpMode {
     @Override
     public void runOpMode() {
