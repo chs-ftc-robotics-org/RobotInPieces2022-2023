@@ -16,8 +16,42 @@ public class FinalTeleOp extends LinearOpMode {
         robot.initialize(this);
         waitForStart();
         while(opModeIsActive()) {
-            robot.drivetrain.move(0.3, 5000);
-            robot.drivetrain.update();
+            double x;
+            double y;
+            double y1;
+            double x1;
+            double strife;
+            //Loop this until the "STOP" button is pressed
+            boolean aPressed = false;
+            while (opModeIsActive()) {
+                // Forward & Backward
+                y = (-gamepad1.left_stick_y) * 0.5;
+                x1 = -(gamepad1.left_stick_x) * 0.5;
+                x = (-gamepad1.right_stick_x) * 0.5;
+
+                if(gamepad2.a) {
+                    if(!aPressed) {
+                        if (robot.slides.isClawLocked()) {
+                            robot.slides.unlockClaw();
+                        } else {
+                            robot.slides.lockClaw();
+                        }
+                    }
+                    aPressed = true;
+                } else {
+                    aPressed = false;
+                }
+
+                robot.drivetrain.frontLeft.setPower((y - x) - x1);
+                robot.drivetrain.backLeft.setPower((y - x) + x1);
+                robot.drivetrain.frontRight.setPower((y + x) + x1);
+                robot.drivetrain.backRight.setPower((y + x) - x1);
+
+                String unlockedText = robot.slides.isClawLocked() ? "Locked" : "Unlocked";
+                telemetry.addLine("Claw: " + unlockedText);
+                telemetry.addLine("Slides: " + robot.slides.percentToTop() + "%");
+
+            }
         }
     }
 }

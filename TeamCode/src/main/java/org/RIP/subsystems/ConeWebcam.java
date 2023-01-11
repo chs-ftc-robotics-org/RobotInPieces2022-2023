@@ -23,15 +23,16 @@ public class ConeWebcam extends Subsystem {
     private static final String TFOD_MODEL_ASSET = "rip_model_v1.tflite";
     //this is where it's stored on the control hub
     private static final String TFOD_MODEL_FILE  = Environment.getExternalStorageDirectory().getPath() + "/FIRST/tflitemodels/rip_model_v1.tflite";
+    /** Position 1: skulls, position 2: gears, position 3; coffins */
     private static final String[] LABELS = {
             "skulls",
-            "coffins",
-            "gears"
+            "gears",
+            "coffins"
     };
 
     private LinearOpMode opMode;
     private ElapsedTime globalTimer;
-
+    private List<Recognition> allRecognitions;
     @Override
     public void disable() {
         tfod.deactivate();
@@ -86,8 +87,10 @@ public class ConeWebcam extends Subsystem {
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
+
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
+                allRecognitions.addAll(updatedRecognitions);
                 opMode.telemetry.addData("# Objects Detected", updatedRecognitions.size());
 
                 // step through the list of recognitions and display image position/size information for each one
@@ -111,8 +114,25 @@ public class ConeWebcam extends Subsystem {
     public void stop() {
 
     }
-    public void getType() {
-
+    public int getPositionFromCamera() {
+        //Find the recognition type most frequently used
+        int[]frequency = new int[LABELS.length];
+        for(Recognition recognition: allRecognitions) {
+            for(int i=0; i<LABELS.length; i++){
+                if (recognition.getLabel().equals(LABELS[i])) {
+                    frequency[i]++;
+                }
+            }
+        }
+        int highestFrequency = 0;
+        int highestFrequencyIndex = 0;
+        for(int i=0; i<LABELS.length; i++){
+            if (frequency[i] > highestFrequency){
+                highestFrequency = frequency[i];
+                highestFrequencyIndex = i;
+            }
+        }
+        return highestFrequencyIndex+1;
     }
 
     @Override

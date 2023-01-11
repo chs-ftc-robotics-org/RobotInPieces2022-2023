@@ -15,7 +15,7 @@
             <goBILDA5202SeriesMotor name="slide_left" port="0" />
             <goBILDA5202SeriesMotor name="slide_right" port="1" />
             <Servo name="cone_picker" port="0" />
-            <LynxEmbeddedIMU name="imu" port="0" bus="0" />
+            <LynxEmbeddedIMU name="imu" port="1" bus="0" />
         </LynxModule>
     </LynxUsbDevice>
     <Webcam name="Webcam 1" serialNumber="8DE7A160" />
