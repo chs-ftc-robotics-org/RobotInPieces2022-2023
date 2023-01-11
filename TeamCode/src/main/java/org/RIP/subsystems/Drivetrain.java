@@ -19,11 +19,10 @@ public class Drivetrain extends Subsystem {
 
     private boolean isActive;
 
-    DcMotor frontLeft;
-    DcMotor frontRight;
-    DcMotor backLeft;
-    DcMotor backRight;
-    DcMotor[] driveMotors = {frontLeft, frontRight, backLeft, backRight};
+    public DcMotor frontLeft;
+    public DcMotor frontRight;
+    public DcMotor backLeft;
+    public DcMotor backRight;
 
     private LinearOpMode opMode;
     private ElapsedTime globalTimer;
@@ -70,12 +69,37 @@ public class Drivetrain extends Subsystem {
     }
 
     //move (blocking)
+    /** Positive values moves forward, negative moves back */
+    public void move(double power, double seconds) {
+        ElapsedTime timer = new ElapsedTime();
+        frontLeftPwr = power;
+        frontRightPwr = power;
+        backLeftPwr = power;
+        backRightPwr = power;
+        update();
+    }
+    /** Positive values turn right, negative turns left */
+    public void rotate(double power, double seconds) {
+        frontLeftPwr = power;
+        frontRightPwr = -power;
+        backLeftPwr = power;
+        backRightPwr = -power;
+        update();
+    }
+    /** Positive values strafe right, negative strafes left */
+    public void strafe(double power, double seconds){
+        frontLeftPwr = power;
+        frontRightPwr = -power;
+        backLeftPwr = -power;
+        backRightPwr = power;
+        update();
+    }
     ElapsedTime timer = new ElapsedTime();
-    boolean initialized;
-    double startTime = timer.milliseconds();
-    public void move(double power, double milliseconds) {
+    public void moveWithTime(double power, double milliseconds) {
         //if(!isActive) return;
-
+        timer.reset();
+        //TODO: make this only run once
+        double startTime = timer.milliseconds();
         double endTime  = timer.milliseconds() ;
         opMode.telemetry.addLine("second : "+String.valueOf(milliseconds));
         opMode.telemetry.addLine("Eval : "+String.valueOf(endTime-startTime));
