@@ -1,21 +1,18 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<Robot xmlns:tools="http://schemas.android.com/tools"
-    type="FirstInspires-FTC"
-    tools:ignore="MissingDefaultResource">
+<Robot type="FirstInspires-FTC">
     <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
+        <LynxModule name="Expansion Hub 2" port="2">
+            <goBILDA5202SeriesMotor name="slide_left" port="0" />
+            <goBILDA5202SeriesMotor name="slide_right" port="1" />
+            <Servo name="claw" port="0" />
+        </LynxModule>
         <LynxModule name="Control Hub" port="173">
             <goBILDA5202SeriesMotor name="back_right" port="0" />
             <goBILDA5202SeriesMotor name="back_left" port="1" />
             <goBILDA5202SeriesMotor name="front_right" port="2" />
             <goBILDA5202SeriesMotor name="front_left" port="3" />
-            <Servo name="Test" port="0" />
+            <ContinuousRotationServo name="Test" port="0" />
             <LynxEmbeddedIMU name="imu" port="0" bus="0" />
-        </LynxModule>
-        <LynxModule name="Expansion Hub" port="3">
-            <goBILDA5202SeriesMotor name="slide_left" port="0" />
-            <goBILDA5202SeriesMotor name="slide_right" port="1" />
-            <Servo name="cone_picker" port="0" />
-            <LynxEmbeddedIMU name="imu" port="1" bus="0" />
         </LynxModule>
     </LynxUsbDevice>
     <Webcam name="Webcam 1" serialNumber="8DE7A160" />

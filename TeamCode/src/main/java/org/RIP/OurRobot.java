@@ -21,11 +21,12 @@ public class OurRobot {
             drivetrain,
             coneWebcam,
             imu,
-            //slides
+            slides
     };
 
     public void initialize(LinearOpMode opMode) {
         globalTimer.reset();
+        opMode.telemetry.setAutoClear(false);
         for(Subsystem system : subsystems){
             try {
                 system.initialize(opMode, globalTimer);

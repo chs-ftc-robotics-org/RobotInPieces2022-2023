@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.RIP.OurRobot;
 
-@Autonomous(name="_Final TeleOp")
+@TeleOp(name="Final TeleOp")
 public class FinalTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -15,6 +15,8 @@ public class FinalTeleOp extends LinearOpMode {
         OurRobot robot = new OurRobot();
         robot.initialize(this);
         waitForStart();
+
+        double slidePower;
         while(opModeIsActive()) {
             double x;
             double y;
@@ -47,9 +49,31 @@ public class FinalTeleOp extends LinearOpMode {
                 robot.drivetrain.frontRight.setPower((y + x) + x1);
                 robot.drivetrain.backRight.setPower((y + x) - x1);
 
+//                if(gamepad2.dpad_up) {
+//                    slidePower = 1.0;
+//                } else if (gamepad2.dpad_down) {
+//                    slidePower = -1.0;
+//                } else {
+//                    slidePower = 0.0;
+//                }
+//                robot.slides.slideLeft.setPower(slidePower);
+//                robot.slides.slideRight.setPower(slidePower);
+                if(gamepad2.left_trigger > 0.2) {
+                    robot.slides.slideLeft.setPower(gamepad2.left_trigger);
+                    robot.slides.slideRight.setPower(gamepad2.left_trigger);
+                } else if(gamepad2.right_trigger > 0.2 ) {
+                    robot.slides.slideLeft.setPower(-gamepad2.right_trigger);
+                    robot.slides.slideRight.setPower(-gamepad2.right_trigger);
+                } else {
+                    robot.slides.slideLeft.setPower(0);
+                    robot.slides.slideRight.setPower(0);
+                }
+
+
                 String unlockedText = robot.slides.isClawLocked() ? "Locked" : "Unlocked";
                 telemetry.addLine("Claw: " + unlockedText);
                 telemetry.addLine("Slides: " + robot.slides.percentToTop() + "%");
+                telemetry.update();
 
             }
         }

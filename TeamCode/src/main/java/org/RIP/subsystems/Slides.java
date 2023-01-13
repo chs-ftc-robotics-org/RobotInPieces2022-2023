@@ -14,9 +14,9 @@ import java.io.IOException;
 
 
 public class Slides extends Subsystem {
-    DcMotor slideLeft;
-    DcMotor slideRight;
-    Servo claw;
+    public DcMotor slideLeft;
+    public DcMotor slideRight;
+    public Servo claw;
     ElapsedTime globalTimer;
     LinearOpMode opMode;
 //    private final int LOWEST_POSITION = 0;
@@ -24,6 +24,8 @@ public class Slides extends Subsystem {
 //    private final int MID_POSITION = 5000;
 //    private final int HIGH_POSITION = 7500;
     private final int HIGHEST_POSITION = 10000;
+    private final double clawLockedPos = 0.2;
+    private final double clawUnlockedPos = 0.7;
 
     @Override
     public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) throws IOException {
@@ -45,8 +47,6 @@ public class Slides extends Subsystem {
     public void disable() {
 
     }
-    private final double clawLockedPos = 0.2;
-    private final double clawUnlockedPos = 0.8;
     private boolean clawLocked = true;
     public boolean isClawLocked() {
         return clawLocked;

@@ -15,6 +15,8 @@ public class MotorsTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         //Get motors from Hardware Map
+        DcMotor s1 = hardwareMap.get(DcMotor.class, "slide_right");
+        DcMotor s0 = hardwareMap.get(DcMotor.class, "slide_left");
         DcMotor m3 = hardwareMap.get(DcMotor.class, "front_left");
         DcMotor m2 = hardwareMap.get(DcMotor.class, "front_right");
         DcMotor m1 = hardwareMap.get(DcMotor.class, "back_left");
@@ -40,6 +42,8 @@ public class MotorsTest extends LinearOpMode {
                 m2.setPower(0);
                 m3.setPower(0);
             }
+            s0.setPower(gamepad2.left_trigger);
+            s1.setPower(gamepad2.right_trigger);
 
             //telemetry.addData("Port 0 Power:", m0power);
         }

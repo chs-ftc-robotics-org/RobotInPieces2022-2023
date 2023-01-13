@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConeWebcam extends Subsystem {
@@ -32,7 +33,7 @@ public class ConeWebcam extends Subsystem {
 
     private LinearOpMode opMode;
     private ElapsedTime globalTimer;
-    private List<Recognition> allRecognitions;
+    private List<Recognition> allRecognitions = new ArrayList<Recognition>();
     @Override
     public void disable() {
         tfod.deactivate();
