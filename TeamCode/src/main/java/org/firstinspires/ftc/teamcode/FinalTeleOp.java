@@ -59,18 +59,16 @@ public class FinalTeleOp extends LinearOpMode {
 //                robot.slides.slideLeft.setPower(slidePower);
 //                robot.slides.slideRight.setPower(slidePower);
                 if(gamepad2.left_trigger > 0.2) {
-                    robot.slides.slideLeft.setPower(gamepad2.left_trigger);
-                    robot.slides.slideRight.setPower(gamepad2.left_trigger);
+                    robot.slides.lower(gamepad2.left_trigger);
                 } else if(gamepad2.right_trigger > 0.2 ) {
-                    robot.slides.slideLeft.setPower(-gamepad2.right_trigger);
-                    robot.slides.slideRight.setPower(-gamepad2.right_trigger);
+                    robot.slides.raise(gamepad2.right_trigger);
                 } else {
-                    robot.slides.slideLeft.setPower(0);
-                    robot.slides.slideRight.setPower(0);
+                    robot.slides.stop();
                 }
 
 
                 String unlockedText = robot.slides.isClawLocked() ? "Locked" : "Unlocked";
+                telemetry.clear();
                 telemetry.addLine("Claw: " + unlockedText);
                 telemetry.addLine("Slides: " + robot.slides.percentToTop() + "%");
                 telemetry.update();
