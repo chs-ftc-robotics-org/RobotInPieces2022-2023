@@ -20,7 +20,7 @@ public class SubsystemTest extends LinearOpMode {
         robot.initialize(this);
         waitForStart();
         while(opModeIsActive()) {
-            robot.drivetrain.move(0.3, 5000);
+            robot.drivetrain.move(0.3);
             robot.drivetrain.update();
         }
     }

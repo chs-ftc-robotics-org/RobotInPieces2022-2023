@@ -70,7 +70,7 @@ public class Slides extends Subsystem {
         slideRight.setPower(-power);
     }
     public void lower(double power) {
-        if(slideSensor.getState() == true) {
+        if(slideSensor.getState() == false) {
             return;
         } else {
             slideLeft.setPower(power);

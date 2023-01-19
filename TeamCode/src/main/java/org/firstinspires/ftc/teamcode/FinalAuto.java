@@ -20,15 +20,43 @@ public class FinalAuto extends LinearOpMode {
             robot.coneWebcam.update();
         }
         int positionToMove = robot.coneWebcam.getPositionFromCamera();
-        if(positionToMove == 1) {
-            while(opModeIsActive()) {
-                robot.drivetrain.move(0.3, 5000);
-                robot.drivetrain.update();
-            }
-        } else if(positionToMove == 2) {
-
-        } else {
-
+        timer.reset();
+        while(timer.seconds() < 3 && opModeIsActive()) {
+            robot.drivetrain.move(0.3);
+            robot.drivetrain.update();
         }
+        timer.reset();
+        while(timer.seconds() < 1 && opModeIsActive()) {
+            robot.slides.lower(0.2);
+        }
+        robot.slides.lockClaw();
+        timer.reset();
+        while(timer.seconds() < 5 && opModeIsActive()) {
+            robot.slides.raise(0.2);
+            robot.drivetrain.move(0.2);
+        }
+        timer.reset();
+        while(timer.seconds() < 1 && opModeIsActive()) {
+            robot.slides.lower(0.2);
+        }
+        robot.slides.unlockClaw();
+        timer.reset();
+        while(timer.seconds() < 2 && opModeIsActive()) {
+            robot.drivetrain.move(-0.2);
+        }
+        timer.reset();
+        while(timer.seconds() < 5 && opModeIsActive()) {
+            robot.slides.lower(0.2);
+            if(positionToMove == 1) {
+                timer.reset();
+                robot.drivetrain.strafe(-0.2);
+            } else if(positionToMove == 2) {
+                //stay there
+            } else {
+                timer.reset();
+                robot.drivetrain.strafe(0.2);
+            }
+        }
+
     }
 }

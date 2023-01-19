@@ -70,7 +70,7 @@ public class Drivetrain extends Subsystem {
 
     //move (blocking)
     /** Positive values moves forward, negative moves back */
-    public void move(double power, double seconds) {
+    public void move(double power) {
         ElapsedTime timer = new ElapsedTime();
         frontLeftPwr = power;
         frontRightPwr = power;
@@ -78,14 +78,14 @@ public class Drivetrain extends Subsystem {
         backRightPwr = power;
     }
     /** Positive values turn right, negative turns left */
-    public void rotate(double power, double seconds) {
+    public void rotate(double power) {
         frontLeftPwr = power;
         frontRightPwr = -power;
         backLeftPwr = power;
         backRightPwr = -power;
     }
     /** Positive values strafe right, negative strafes left */
-    public void strafe(double power, double seconds){
+    public void strafe(double power){
         frontLeftPwr = power;
         frontRightPwr = -power;
         backLeftPwr = -power;
