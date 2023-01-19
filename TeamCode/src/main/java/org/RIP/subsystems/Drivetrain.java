@@ -7,29 +7,36 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.RIP.OurRobot;
 import org.RIP.Subsystem;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class Drivetrain extends Subsystem {
-    private boolean isActive = false;
 
     private double frontLeftPwr;
     private double frontRightPwr;
     private double backLeftPwr;
     private double backRightPwr;
 
+    private boolean isActive;
+
+    public DcMotor frontLeft;
+    public DcMotor frontRight;
+    public DcMotor backLeft;
+    public DcMotor backRight;
+
     private LinearOpMode opMode;
-
-    DcMotor frontLeft;
-    DcMotor frontRight;
-    DcMotor backLeft;
-    DcMotor backRight;
-    DcMotor[] driveMotors = {frontLeft, frontRight, backLeft, backRight};
-
     private ElapsedTime globalTimer;
 
     @Override
-    public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) {
+    public void disable() {
+        isActive = false;
+        stopMoving();
+    }
+
+    @Override
+    public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) throws IOException {
         this.opMode = opMode;
+        this.globalTimer = globalTimer;
         //Get motors from Hardware Map
         frontLeft = opMode.hardwareMap.get(DcMotor.class, "front_left");
         frontRight = opMode.hardwareMap.get(DcMotor.class, "front_right");
@@ -39,7 +46,6 @@ public class Drivetrain extends Subsystem {
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
-        isActive = true;
     }
 
     @Override
@@ -50,9 +56,7 @@ public class Drivetrain extends Subsystem {
         backLeft.setPower(backLeftPwr);
         backRight.setPower(backRightPwr);
     }
-
-    @Override
-    public void stop() {
+    public void stopMoving() {
         frontLeftPwr=0;
         frontRightPwr=0;
         backLeftPwr=0;
@@ -65,41 +69,52 @@ public class Drivetrain extends Subsystem {
     }
 
     //move (blocking)
+    /** Positive values moves forward, negative moves back */
+    public void move(double power) {
+        ElapsedTime timer = new ElapsedTime();
+        frontLeftPwr = power;
+        frontRightPwr = power;
+        backLeftPwr = power;
+        backRightPwr = power;
+    }
+    /** Positive values turn right, negative turns left */
+    public void rotate(double power) {
+        frontLeftPwr = power;
+        frontRightPwr = -power;
+        backLeftPwr = power;
+        backRightPwr = -power;
+    }
+    /** Positive values strafe right, negative strafes left */
+    public void strafe(double power){
+        frontLeftPwr = power;
+        frontRightPwr = -power;
+        backLeftPwr = -power;
+        backRightPwr = power;
+    }
     ElapsedTime timer = new ElapsedTime();
-    boolean initialized;
-    double startTime = timer.milliseconds();
-    boolean cont = true;
-    public void move(double power, double miliseconds) {
-        if(!isActive) return;
-
+    public void moveWithTime(double power, double milliseconds) {
+        //if(!isActive) return;
+        timer.reset();
+        //TODO: make this only run once
+        double startTime = timer.milliseconds();
         double endTime  = timer.milliseconds() ;
-        opMode.telemetry.addLine("second : "+String.valueOf(miliseconds));
+        opMode.telemetry.addLine("second : "+String.valueOf(milliseconds));
         opMode.telemetry.addLine("Eval : "+String.valueOf(endTime-startTime));
-
-        opMode.telemetry.addData("back_right current position: ", frontLeft.getCurrentPosition());
 
         opMode.telemetry.update();
 
-        int eval = ((int) endTime - (int) startTime) % 2;
-
-        while (eval != 0 ) {
-            if (cont) {
-                frontLeftPwr = power;
-                frontRightPwr = power;
-                backLeftPwr = power;
-                backRightPwr = power;
-            } else {
-                frontLeftPwr = -power;
-                frontRightPwr = -power;
-                backLeftPwr = -power;
-                backRightPwr = -power;
-            }
-        }
-
-        if(frontLeft.getCurrentPosition() == 0) {
-            cont = false;
+        if((endTime - startTime) < milliseconds-2000) {
+            frontLeftPwr = power;
+            frontRightPwr = power;
+            backLeftPwr = power;
+            backRightPwr = power;
+        } else if ((endTime - startTime) < milliseconds+5000){
+            frontLeftPwr = power;
+            frontRightPwr = -power;
+            backLeftPwr = power;
+            backRightPwr = -power;
         } else {
-            cont = true;
+            stopMoving();
         }
     }
 }

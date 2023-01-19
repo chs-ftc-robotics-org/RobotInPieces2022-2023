@@ -1,5 +1,7 @@
 package org.RIP.subsystems;
 
+import android.os.Environment;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -12,22 +14,36 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConeWebcam extends Subsystem {
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
     private static final String VUFORIA_KEY = "AXyOBAb/////AAABmR6fZcY51EWEsPmbfWJ1w99ml2AnaVfhpovIbujIbr0CK66LMFHd5kpdeX/Z776lrYYfpu3LXAgDw0ZRpYnRuMwVrPtHJ12i95kzVFtN023RjzPCMPbkYmFlSXhSjm2Pz5H4vtnqhvxcbbEvvklIi1LQIjhzxdI5Ue5M5MdkbwDbGwFdQG86jS3BsJTwoXC1Citcnzih9rmBEudWy3bZUBa6osfNK70T3KEoEWrOp/hKBzw+K0D7uwx3Rhqu+yZcM+nLizyKEv6BiMGRjEL3le0P67bGfBnOnxbYSKY+4ifFA2k7cUoZbuTTYVzNbtkTf4aBcn55ltcU90QtAqzRStLHC4ij3JSdtW3dqLJoMGWB";
-    private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
-    // private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
+    private static final String TFOD_MODEL_ASSET = "rip_model_v1.tflite";
+    //this is where it's stored on the control hub
+    private static final String TFOD_MODEL_FILE  = Environment.getExternalStorageDirectory().getPath() + "/FIRST/tflitemodels/rip_model_v1.tflite";
+    /** Position 1: skulls, position 2: gears, position 3; coffins */
     private static final String[] LABELS = {
-            "1 Bolt",
-            "2 Bulb",
-            "3 Panel"
+            "skulls",
+            "gears",
+            "coffins"
     };
+
+    private LinearOpMode opMode;
+    private ElapsedTime globalTimer;
+    private List<Recognition> allRecognitions = new ArrayList<Recognition>();
+    @Override
+    public void disable() {
+        tfod.deactivate();
+
+    }
 
     @Override
     public void initialize(LinearOpMode opMode, ElapsedTime globalTimer) {
+        this.opMode = opMode;
+        this.globalTimer = globalTimer;
             /*
              * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
              */
@@ -69,15 +85,13 @@ public class ConeWebcam extends Subsystem {
 
     @Override
     public void update() {
-
-        /** Wait for the game to begin */
-        opMode.telemetry.addData(">", "Press Play to start op mode");
-        opMode.telemetry.update();
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
+
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
+                allRecognitions.addAll(updatedRecognitions);
                 opMode.telemetry.addData("# Objects Detected", updatedRecognitions.size());
 
                 // step through the list of recognitions and display image position/size information for each one
@@ -98,9 +112,28 @@ public class ConeWebcam extends Subsystem {
         }
     }
 
-    @Override
     public void stop() {
 
+    }
+    public int getPositionFromCamera() {
+        //Find the recognition type most frequently used
+        int[]frequency = new int[LABELS.length];
+        for(Recognition recognition: allRecognitions) {
+            for(int i=0; i<LABELS.length; i++){
+                if (recognition.getLabel().equals(LABELS[i])) {
+                    frequency[i]++;
+                }
+            }
+        }
+        int highestFrequency = 0;
+        int highestFrequencyIndex = 0;
+        for(int i=0; i<LABELS.length; i++){
+            if (frequency[i] > highestFrequency){
+                highestFrequency = frequency[i];
+                highestFrequencyIndex = i;
+            }
+        }
+        return highestFrequencyIndex+1;
     }
 
     @Override

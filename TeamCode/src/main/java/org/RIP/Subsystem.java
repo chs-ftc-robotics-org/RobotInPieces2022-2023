@@ -16,13 +16,10 @@ public abstract class Subsystem {
     public boolean isActive(){
         return isActive;
     }
-    public void disable(){
-        isActive = false;
-    }
+    public abstract void disable();
     public abstract void initialize(LinearOpMode opMode, ElapsedTime globalTimer) throws IOException;
 //            this.opMode = opMode;
 //        this.globalTimer = globalTimer;
     public abstract void update();
-    public abstract void stop();
 
 }
