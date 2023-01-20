@@ -114,18 +114,23 @@ public class AutonomousTest extends LinearOpMode {
             frontRight.setPower(mot2);
             backRight.setPower(mot4);
 
-            if (3 <= sub && sub <= 7) {
+            if (0 <= sub && sub <= 1) {
                 System.out.println(sub + " milliseconds have passed");
-                mot1 = 1;
+                mot1 = .5;
+                mot2 = .5;
+                mot3 = .5;
+                mot4 = .5;
+            } else if (sub > 3.0 && sub <= 3.65 ){
+                mot1 = -1;
                 mot2 = 1;
                 mot3 = 1;
-                mot4 = 1;
-            } else if (sub > 10){
-                mot1 = 1;
-                mot2 = -1;
-                mot3 = -1;
-                mot4 = 1;
+                mot4 = -1;
 
+            } else {
+                mot1 = 0;
+                mot2 = 0;
+                mot3 = 0;
+                mot4 = 0;
             }
             add++;
         }
