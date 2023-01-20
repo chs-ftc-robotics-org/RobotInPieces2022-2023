@@ -7,7 +7,16 @@ import org.RIP.OurRobot;
 
 @Autonomous(name="Final Auto")
 public class FinalAuto extends LinearOpMode {
-    @Override
+    //@Override
+
+    private double sub = 0;
+
+    private double mot1 = 0,mot2 = 0,mot3 = 0,mot4 = 0;
+    private double pow;
+    private boolean strafe = false;
+    private boolean brake = false;
+
+
     public void runOpMode() {
         //Get motors from Hardware Map
         OurRobot robot = new OurRobot();
@@ -15,47 +24,53 @@ public class FinalAuto extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
         waitForStart();
 
-        timer.reset();
-        while(timer.seconds() < 5 && opModeIsActive()){
-            robot.coneWebcam.update();
+        /*
+        while(timer.seconds() < 5){
+            //robot.coneWebcam.update();
         }
-        int positionToMove = robot.coneWebcam.getPositionFromCamera();
+
         timer.reset();
-        while(timer.seconds() < 3 && opModeIsActive()) {
-            robot.drivetrain.move(0.3);
-            robot.drivetrain.update();
-        }
-        timer.reset();
-        while(timer.seconds() < 1 && opModeIsActive()) {
-            robot.slides.lower(0.2);
-        }
-        robot.slides.lockClaw();
-        timer.reset();
-        while(timer.seconds() < 5 && opModeIsActive()) {
-            robot.slides.raise(0.2);
-            robot.drivetrain.move(0.2);
-        }
-        timer.reset();
-        while(timer.seconds() < 1 && opModeIsActive()) {
-            robot.slides.lower(0.2);
-        }
-        robot.slides.unlockClaw();
-        timer.reset();
-        while(timer.seconds() < 2 && opModeIsActive()) {
-            robot.drivetrain.move(-0.2);
-        }
-        timer.reset();
-        while(timer.seconds() < 5 && opModeIsActive()) {
-            robot.slides.lower(0.2);
-            if(positionToMove == 1) {
-                timer.reset();
-                robot.drivetrain.strafe(-0.2);
-            } else if(positionToMove == 2) {
-                //stay there
+
+        */
+
+        while(opModeIsActive()) {
+
+
+            //int positionToMove = robot.coneWebcam.getPositionFromCamera();
+            int positionToMove = 1;
+
+            if (positionToMove == 1) {
+                pow = 1;
+            } else if (positionToMove == 2) {
+                pow = 0;
+            } else if (positionToMove == 3) {
+                pow = -1;
             } else {
-                timer.reset();
-                robot.drivetrain.strafe(0.2);
+                telemetry.addLine("No position found");
+                telemetry.update();
+                brake = true;
             }
+
+            if (!brake)
+                sub = timer.seconds();
+            else
+                sub = -1;
+
+            telemetry.addLine(sub + " seconds have passed");
+            telemetry.update();
+
+            if (0 <= sub && sub <= 2) {
+                System.out.println(sub + " milliseconds have passed");
+                robot.drivetrain.move(0.5);
+
+            } else if (sub > 3.0 && sub <= 3.65) {
+                robot.drivetrain.strafe(pow);
+            } else {
+                robot.drivetrain.move(0);
+            }
+
+            brake = false;
+
         }
 
     }
