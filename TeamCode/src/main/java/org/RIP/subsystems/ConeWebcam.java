@@ -93,12 +93,12 @@ public class ConeWebcam extends Subsystem {
             }
         }
 
+
     @Override
     public void update() {
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
-
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
                 allRecognitions.addAll(updatedRecognitions);
@@ -106,17 +106,17 @@ public class ConeWebcam extends Subsystem {
 
                 // step through the list of recognitions and display image position/size information for each one
                 // Note: "Image number" refers to the randomized image orientation/number
-                for (Recognition recognition : updatedRecognitions) {
-                    double col = (recognition.getLeft() + recognition.getRight()) / 2;
-                    double row = (recognition.getTop() + recognition.getBottom()) / 2;
-                    double width = Math.abs(recognition.getRight() - recognition.getLeft());
-                    double height = Math.abs(recognition.getTop() - recognition.getBottom());
-
-                    opMode.telemetry.addData("", " ");
-                    opMode.telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
-                    opMode.telemetry.addData("- Position (Row/Col)", "%.0f / %.0f", row, col);
-                    opMode.telemetry.addData("- Size (Width/Height)", "%.0f / %.0f", width, height);
-                }
+//                for (Recognition recognition : updatedRecognitions) {
+//                    double col = (recognition.getLeft() + recognition.getRight()) / 2;
+//                    double row = (recognition.getTop() + recognition.getBottom()) / 2;
+//                    double width = Math.abs(recognition.getRight() - recognition.getLeft());
+//                    double height = Math.abs(recognition.getTop() - recognition.getBottom());
+//
+//                    opMode.telemetry.addData("", " ");
+//                    opMode.telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
+//                    opMode.telemetry.addData("- Position (Row/Col)", "%.0f / %.0f", row, col);
+//                    opMode.telemetry.addData("- Size (Width/Height)", "%.0f / %.0f", width, height);
+//                }
                 opMode.telemetry.update();
             }
         }
@@ -138,6 +138,7 @@ public class ConeWebcam extends Subsystem {
         int highestFrequency = 0;
         int highestFrequencyIndex = 0;
         for(int i=0; i<LABELS.length; i++){
+            opMode.telemetry.addLine("freq1:"+frequency[0]+",freq2:"+frequency[1]+",freq3:"+frequency[2]);
             if (frequency[i] > highestFrequency){
                 highestFrequency = frequency[i];
                 highestFrequencyIndex = i;
