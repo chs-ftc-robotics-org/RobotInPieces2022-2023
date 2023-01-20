@@ -97,7 +97,7 @@ public class AutonomousTest extends LinearOpMode {
         double end;
         double sub = 0;
 
-        double x = 0.2;
+        double mot1 = 0,mot2 = 0,mot3 = 0,mot4 = 0;
 
         int add = 0;
         //Loop this until the "STOP" button is pressed
@@ -107,16 +107,30 @@ public class AutonomousTest extends LinearOpMode {
 
             end = timer.milliseconds();
             sub  = end - start;
-            frontLeft.setPower(x);
-            backLeft.setPower(x);
-            frontRight.setPower(x);
-            backRight.setPower(x);
+            sub = sub / 1000;
 
-            if (10000 >= sub && sub >= 4000) {
-                System.out.println(x + " milliseconds have passed");
-                x = -(0.2);
-            } else if (sub > 10000){
-                x = 0;
+            frontLeft.setPower(mot1);
+            backLeft.setPower(mot3);
+            frontRight.setPower(mot2);
+            backRight.setPower(mot4);
+
+            if (0 <= sub && sub <= 1) {
+                System.out.println(sub + " milliseconds have passed");
+                mot1 = .5;
+                mot2 = .5;
+                mot3 = .5;
+                mot4 = .5;
+            } else if (sub > 3.0 && sub <= 3.65 ){
+                mot1 = -1;
+                mot2 = 1;
+                mot3 = 1;
+                mot4 = -1;
+
+            } else {
+                mot1 = 0;
+                mot2 = 0;
+                mot3 = 0;
+                mot4 = 0;
             }
             add++;
         }
