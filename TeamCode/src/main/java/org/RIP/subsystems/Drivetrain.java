@@ -50,11 +50,7 @@ public class Drivetrain extends Subsystem {
 
     @Override
     public void update() {
-        if(!isActive) return;
-        frontLeft.setPower(frontLeftPwr);
-        frontRight.setPower(frontRightPwr);
-        backLeft.setPower(backLeftPwr);
-        backRight.setPower(backRightPwr);
+
     }
     public void stopMoving() {
         frontLeftPwr=0;
@@ -68,28 +64,33 @@ public class Drivetrain extends Subsystem {
         return "drivetrain";
     }
 
-    //move (blocking)
+    //move (non blocking)
     /** Positive values moves forward, negative moves back */
     public void move(double power) {
-        ElapsedTime timer = new ElapsedTime();
-        frontLeftPwr = power;
-        frontRightPwr = power;
-        backLeftPwr = power;
-        backRightPwr = power;
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+    }
+    public void moveEncoder(double power) {
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     /** Positive values turn right, negative turns left */
     public void rotate(double power) {
-        frontLeftPwr = power;
-        frontRightPwr = -power;
-        backLeftPwr = power;
-        backRightPwr = -power;
+        frontLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
     }
     /** Positive values strafe right, negative strafes left */
     public void strafe(double power){
-        frontLeftPwr = power;
-        frontRightPwr = -power;
-        backLeftPwr = -power;
-        backRightPwr = power;
+        frontLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(power);
     }
     ElapsedTime timer = new ElapsedTime();
     public void moveWithTime(double power, double milliseconds) {
