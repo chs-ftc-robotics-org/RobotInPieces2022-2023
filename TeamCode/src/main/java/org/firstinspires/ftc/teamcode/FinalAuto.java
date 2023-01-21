@@ -24,27 +24,19 @@ public class FinalAuto extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
         waitForStart();
 
-        /*
         while(timer.seconds() < 5){
-            //robot.coneWebcam.update();
+            robot.coneWebcam.update();
         }
-
         timer.reset();
 
-        */
-
+        int positionToMove = robot.coneWebcam.getPositionFromCamera();
         while(opModeIsActive()) {
-
-
-            //int positionToMove = robot.coneWebcam.getPositionFromCamera();
-            int positionToMove = 1;
-
             if (positionToMove == 1) {
-                pow = 1;
+                pow = -0.75;
             } else if (positionToMove == 2) {
                 pow = 0;
             } else if (positionToMove == 3) {
-                pow = -1;
+                pow = 0.75;
             } else {
                 telemetry.addLine("No position found");
                 telemetry.update();
@@ -59,11 +51,11 @@ public class FinalAuto extends LinearOpMode {
             telemetry.addLine(sub + " seconds have passed");
             telemetry.update();
 
-            if (0 <= sub && sub <= 2) {
+            if (0 <= sub && sub <= 1.75) {
                 System.out.println(sub + " milliseconds have passed");
                 robot.drivetrain.move(0.5);
 
-            } else if (sub > 3.0 && sub <= 3.65) {
+            } else if (sub > 2.0 && sub <= 3.25) {
                 robot.drivetrain.strafe(pow);
             } else {
                 robot.drivetrain.move(0);
