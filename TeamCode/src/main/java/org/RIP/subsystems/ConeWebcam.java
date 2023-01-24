@@ -22,23 +22,23 @@ public class ConeWebcam extends Subsystem {
     private TFObjectDetector tfod;
     private static final String VUFORIA_KEY = "AXyOBAb/////AAABmR6fZcY51EWEsPmbfWJ1w99ml2AnaVfhpovIbujIbr0CK66LMFHd5kpdeX/Z776lrYYfpu3LXAgDw0ZRpYnRuMwVrPtHJ12i95kzVFtN023RjzPCMPbkYmFlSXhSjm2Pz5H4vtnqhvxcbbEvvklIi1LQIjhzxdI5Ue5M5MdkbwDbGwFdQG86jS3BsJTwoXC1Citcnzih9rmBEudWy3bZUBa6osfNK70T3KEoEWrOp/hKBzw+K0D7uwx3Rhqu+yZcM+nLizyKEv6BiMGRjEL3le0P67bGfBnOnxbYSKY+4ifFA2k7cUoZbuTTYVzNbtkTf4aBcn55ltcU90QtAqzRStLHC4ij3JSdtW3dqLJoMGWB";
 
-//    private static final String TFOD_MODEL_ASSET = "rip_model_v1.tflite";
-//    //this is where it's stored on the control hub
-//    private static final String TFOD_MODEL_FILE  = Environment.getExternalStorageDirectory().getPath() + "/FIRST/tflitemodels/rip_model_v1.tflite";
-//    private static final String[] LABELS = {
-//            "skulls",
-//            "gears",
-//            "coffins"
-//    };
-
-    private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
-    private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
-    /** Position 1: skulls, position 2: gears, position 3; coffins */
+    private static final String TFOD_MODEL_ASSET = "rip_model_v2.tflite";
+    //this is where it's stored on the control hub
+    private static final String TFOD_MODEL_FILE  = Environment.getExternalStorageDirectory().getPath() + "/FIRST/tflitemodels/rip_model_v1.tflite";
     private static final String[] LABELS = {
-            "1 Bolt",
-            "2 Bulb",
-            "3 Panel"
+            "Coffin",
+            "Gear",
+            "Skull"
     };
+
+//    private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
+//    private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
+//    /** Position 1: skulls, position 2: gears, position 3; coffins */
+//    private static final String[] LABELS = {
+//            "1 Bolt",
+//            "2 Bulb",
+//            "3 Panel"
+//    };
 
 
     private LinearOpMode opMode;
@@ -102,7 +102,7 @@ public class ConeWebcam extends Subsystem {
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
                 allRecognitions.addAll(updatedRecognitions);
-                opMode.telemetry.addData("# Objects Detected", updatedRecognitions.size());
+                //opMode.telemetry.addData("# Objects Detected", updatedRecognitions.size());
 
                 // step through the list of recognitions and display image position/size information for each one
                 // Note: "Image number" refers to the randomized image orientation/number
