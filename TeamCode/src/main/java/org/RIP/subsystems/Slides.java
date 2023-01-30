@@ -41,6 +41,12 @@ public class Slides extends Subsystem {
         slideRight.setDirection(DcMotor.Direction.REVERSE);
         slideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         slideSensor.setMode(DigitalChannel.Mode.INPUT);
         ElapsedTime timeout = new ElapsedTime();
         timeout.reset();
@@ -71,11 +77,15 @@ public class Slides extends Subsystem {
     }
     public void lower(double power) {
         if(slideSensor.getState() == false) {
+
             return;
         } else {
             slideLeft.setPower(power);
             slideRight.setPower(power);
         }
+    }
+    public void resetEncoder() {
+
     }
     public void stop() {
         slideLeft.setPower(0);
