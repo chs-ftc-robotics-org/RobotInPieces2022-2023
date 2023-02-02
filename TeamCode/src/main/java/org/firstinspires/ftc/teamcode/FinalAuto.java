@@ -56,7 +56,7 @@ public class FinalAuto extends LinearOpMode {
             telemetry.addLine(sub + " seconds have passed");
             telemetry.update();
 
-            if (0 <= sub && sub <= 1.25) {
+            if (0 <= sub && sub <= 1.3) {
                 System.out.println(sub + " milliseconds have passed");
                 robot.drivetrain.move(0.5);
 
