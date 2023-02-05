@@ -27,9 +27,11 @@ public class FinalTeleOp extends LinearOpMode {
             boolean aPressed = false;
             while (opModeIsActive()) {
                 // Forward & Backward
-                y = (-gamepad1.left_stick_y) * 0.5;
+                y = (-gamepad1.left_stick_y) * 0.4;
                 x1 = -(gamepad1.left_stick_x) * 0.5;
-                x = (-gamepad1.right_stick_x) * 0.5;
+                x = (-gamepad1.right_stick_x) * 0.4
+
+                ;
 
                 if(gamepad2.a) {
                     if(!aPressed) {

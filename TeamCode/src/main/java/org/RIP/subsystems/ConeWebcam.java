@@ -137,6 +137,7 @@ public class ConeWebcam extends Subsystem {
         }
         int highestFrequency = 0;
         int highestFrequencyIndex = 0;
+        frequency[1]+=3;
         for(int i=0; i<LABELS.length; i++){
             opMode.telemetry.addLine("freq1:"+frequency[0]+",freq2:"+frequency[1]+",freq3:"+frequency[2]);
             if (frequency[i] > highestFrequency){
